@@ -52,7 +52,7 @@ git clone https://github.com/threeOagency/RestoranAPI
 - Put secrets in .env file
 - Run migrations `yarn run:migrations`
 
-Local connection string example = postgres://api:api@localhost:5432/api
+Local connection string example = postgres://res:res@localhost:5455/res
   
 
 # Run tests
