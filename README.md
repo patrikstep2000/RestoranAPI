@@ -5,7 +5,7 @@
 
 **Prerequisites**
 
-- Don't use windows os (**Joseph Prekrath**)
+- Don't use windows os (**Guisepe Prekrath**)
 
 - Download docker
 
