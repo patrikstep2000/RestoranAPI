@@ -38,10 +38,17 @@ export async function seed(knex: Knex): Promise<void> {
         { FirstName: "Patrik", LastName: "Step",  Email:"patrik@step.com", Password: "1234", CityID: 1, RoleID: 2 }
     ]);
 
+    await knex("Tag").insert([
+        { Name:"Indijski" },
+        { Name:"Kineski" },
+        { Name:"Japanski" },
+        { Name:"Šri Lanka" }
+    ]);
+
     await knex("Restaurant").insert([
-        { Name: "Dubravkin put", CityID: 1 },
-        { Name: "McDonalds", CityID: 2 },
-        { Name: "Kod Zvoneta", CityID: 3}
+        { Name: "Dubravkin put", CityID: 1, Details: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", ShortDetails: "Vrhunski restoran bla bla", TagID: 1 },
+        { Name: "McDonalds", CityID: 2, Details: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", ShortDetails: "Vrhunski restoran bla bla", TagID: 2 },
+        { Name: "Kod Zvoneta", CityID: 3, Details: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", ShortDetails: "Vrhunski restoran bla bla", TagID: 3}
     ]);
 
     await knex("Ingredient").insert([
