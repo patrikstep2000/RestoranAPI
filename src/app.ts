@@ -3,10 +3,12 @@ import express from 'express'
 import healthRouter from './routes/health';
 import restaurantRouter from './routes/RestaurantRoutes';
 import userRouter from './routes/UserRoutes';
+import cookieParser from "cookie-parser"
 
-const corsOption = {
-    origin: "*",
-};
+const corsConfig = {
+    origin: true,
+    credentials: true,
+  };
 
 const application = () => {
 
@@ -15,8 +17,10 @@ const application = () => {
     app.use(express.json());
     
     app.use(express.urlencoded());
+    
+    app.use(cookieParser());
 
-    app.use(cors(corsOption));
+    app.use(cors(corsConfig));
 
     app.use(healthRouter);
 

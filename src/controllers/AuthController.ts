@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import UserType from "../models/User";
 import AuthRepo from "../repo/Auth/AuthRepo";
 
 
@@ -17,6 +18,20 @@ class AuthController {
     }
     public static AuthenticateUser = async (req: Request, res: Response) =>{
         const {email, password} = req.body;
+        console.log(req.cookies)
+        const b = AuthRepo.encrypt(password);
+        let user:Partial<UserType> | null = null;
+        const [userWithEmail] = await AuthRepo.getUser(email);
+        if(userWithEmail.password && AuthRepo.decrypt(userWithEmail.password)===password){
+            user = {...userWithEmail, role: userWithEmail.role || 1};
+        }
+        delete user?.password;
+        const token = AuthRepo.generateJwt(user);
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+        res.setHeader('Access-Control-Allow-Credentials', "true");
+
+        res.cookie("token", token, { maxAge: 900000, httpOnly: true});
+        res.status(200).json({token});
     }
 }
 

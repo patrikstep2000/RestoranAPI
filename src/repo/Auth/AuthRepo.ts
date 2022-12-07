@@ -3,20 +3,28 @@ import crypto from "crypto"
 import db from '../../knexfile';
 import UserType from '../../models/User';
 import { TABLES } from '../../enums/Enums';
+import jwt from "jsonwebtoken"
 
 class AuthRepo {
 
     public static createUser = async (payload:UserType) : Promise<Partial<UserType>[]> => {
         return db(TABLES.USER).insert(payload).returning(['id', 'first_name','last_name','email'])
     }
+    public static getUser = async (email:string) : Promise<Partial<UserType>[]> => {
+        return db(TABLES.USER).select("*").where("email", email);
+    }
 
     static decrypt(ciphertext: string ) {
         return CryptoJS.AES.decrypt(ciphertext, process.env.ENCRYPTION_SECRET as string).toString(CryptoJS.enc.Utf8); 
     }
     public static encrypt = (value:string):string =>{
-       
+       console.log(process.env.ENCRYPTION_SECRET as string, CryptoJS.AES.encrypt(value, process.env.ENCRYPTION_SECRET as string).toString(), CryptoJS.AES.encrypt(value, process.env.ENCRYPTION_SECRET as string).toString())
 return CryptoJS.AES.encrypt(value, process.env.ENCRYPTION_SECRET as string).toString();
 
+    }
+
+    static generateJwt(payload:any){
+       return jwt.sign(payload, process.env.ENCRYPTION_SECRET as string, { expiresIn: 60 * 60 });
     }
 
     public static generateResetCode = (id:number):string => {
@@ -43,6 +51,8 @@ return CryptoJS.AES.encrypt(value, process.env.ENCRYPTION_SECRET as string).toSt
     static setNewPassword(password: string, id:number) {
         return db(TABLES.USER).update({password}).where({id})
     }
+
+    
 
 }
 
