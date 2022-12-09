@@ -3,6 +3,7 @@ import express from 'express'
 import healthRouter from './routes/health';
 import restaurantRouter from './routes/RestaurantRoutes';
 import userRouter from './routes/UserRoutes';
+import authRouter from './routes/AuthRoutes';
 import cookieParser from "cookie-parser"
 
 const corsConfig = {
@@ -27,6 +28,8 @@ const application = () => {
     app.use(restaurantRouter);
     
     app.use(userRouter);
+
+    app.use(authRouter);
 
     app.listen(process.env.PORT, () => {
         console.log(`Listening on port ${process.env.PORT}`);

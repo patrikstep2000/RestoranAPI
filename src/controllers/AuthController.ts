@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserType from "../models/User";
 import AuthRepo from "../repo/Auth/AuthRepo";
+import { MailerHelpers } from "../utils/MailerHelpers";
 
 
 class AuthController {
@@ -16,6 +17,21 @@ class AuthController {
         res.sendStatus(400)
     }
     }
+
+      
+    public static sendResetEmail = async(req:Request, res:Response)=>{
+        try {
+
+            const {email} = req.body;
+            const [user] = await AuthRepo.getUser(email)
+            await MailerHelpers.sendOnboardingEmail(user.id, user.email);
+            res.status(200).json(user)
+        } 
+        catch(e) {
+        res.status(400).json(e);
+        }
+    }
+
     public static AuthenticateUser = async (req: Request, res: Response) =>{
         const {email, password} = req.body;
         console.log(req.cookies)
