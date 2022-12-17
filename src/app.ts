@@ -12,6 +12,7 @@ const corsConfig = {
   };
 
 const application = () => {
+try{
 
     const app = express();
 
@@ -34,6 +35,9 @@ const application = () => {
     app.listen(process.env.PORT, () => {
         console.log(`Listening on port ${process.env.PORT}`);
     })
+}catch(e){
+    console.error(e);
+}
 }
 
 export default application;
